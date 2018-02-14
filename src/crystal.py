@@ -16,16 +16,16 @@ class Crystal:
 
     def __init__(self,latt_vecs,basis):
 
-        self.LattVs = np.array(latt_vecs)
+        self.lattVs = np.array(latt_vecs)
         #self.SpaceGroup = space_group #H-M symbol
         self.Basis = basis #array of Atom objects
     
 
     def getKlattice(self): #generates reciprocal lattice vecs using the real-spce latt vecs
         kVs = np.zeros((3,3),dtype=float)
-        V = np.dot(lattvs[0],np.cross(lattvs[1],lattvs[2]))
+        V = np.dot(self.lattVs[0],np.cross(self.lattVs[1],self.lattVs[2]))
         for i in range(2):
-            kVs[i] = (2*pi/V)*np.cross([i-2],[i-1])
+            kVs[i] = (2*pi/V)*np.cross(self.lattVs[i-2],self.lattVs[i-1])
         return kVs
 
     def getRConditions(self):
@@ -49,7 +49,7 @@ class Crystal:
            conditions.append('h==0 and k==0 and l%2==0')
            conditions.append('k==0 and l==0 and h%2==0')
         
-       else:
+        else:
            raise Exception("Space group %s not yet implemented" %(space_group))
     
 
