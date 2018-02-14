@@ -11,10 +11,16 @@ def Voigt(xdata,xparams,gparam):
     F = np.zeros(len(xdata),dtype=float)
     
     for i in range(len(xdata)):
-        amp = xparams[i][0]
-        x0 = xparams[i][1]
-        w = xparams[i][2]
+        amp = xparams[0][i]
+        xc = xparams[1][i]
+        w = xparams[2][i]
+        
+        gamma = (w/2.0)**2
 
-        F += gparam*amp*(((w/2.0)**2)*(np.power((xdata-xc),-2)+(w/2.0)**2)) + (1-gparam)*amp*np.exp(np.power((-1.0*(xdata-xc),2))/(2.0*(w/(2.0*sqrt(2.0*log(2.0))))**2))
-    
+        
+        lorentzian = gamma/(np.power(xdata-xc,2)+gamma)
+        gaussian = np.exp(-1.0*np.power(xdata-xc,2)/(2.0*(w/sqrt(2.0*log(2.0)))))
+
+        F = np.add(amp*(gparam*lorentzian + (1-gparam)*gaussian),F,casting='unsafe') 
+
     return F
