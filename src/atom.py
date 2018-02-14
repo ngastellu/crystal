@@ -1,15 +1,15 @@
 #!/usr/bin/env python
-
-#*****not yet implemented for H and He***** 
+ 
 import numpy as np
 from math import *
 
 class Atom:
 
-    def __init__(self,name,orb_pop): #define atom based on its name and a list of its vance AOs populations
+    def __init__(self,element,position_file,orb_pop): #define atom based on its element and a list of its valence AOs populations
                                    #which is loaded as a list if ints, the ordering of valence oribitals 
                                    #in this list is the same as the one listed in 'ffs_sorted.dats'
-        self.name = name
+        self.element = element
+        self.posFile = position_file #see data folder for examples of position files
         self.orbPop = orb_pop
     
     def getAOparams(self): #obtain Gaussian fit parameters for aspherical electron scattering of the atom's different
@@ -18,11 +18,25 @@ class Atom:
             self.AOparams = []
             flines = fo.readlines()
             for line in flines:
-                if line.split()[0]==self.name:
+                if line.split()[0]==self.element:
                     self.AOparams.append(map(float,line.split()[3:])) #creates an array of the form[[a params for spherical FF],[b params for spherical FF],
                                                                     #[a's for core],[b's for core],...[a's for last AO],[b's for the last AO]]
             self.AOparams = np.array(self.AOparams)    
     
+    
+    def getXYZ(self):
+        with open(self.posFile,'r') as fo:
+            flines = fo.readlines()
+        self.XYZ = np.zeros((len(flines),3),dtype=float)
+        counter = 0
+        for line in flines:
+            xyz = np.array(map(float,line.split()))
+            self.XYZ[counter] = xyz
+            counter+=1
+
+        
+
+
     def getSFs(self): #calculates the atomic spherical structure
         s_grid = np.array([0.01*k for k in range(101)])
         self.SFs = np.zeros(101, dtype=float)
