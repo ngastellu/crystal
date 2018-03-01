@@ -8,15 +8,15 @@ from scipy.interpolate import interp1d
 from voigt import Voigt
 import matplotlib.pyplot as plt
 
-a = [0.0, 0.0, 5.720]
-b = [4.53, 0.0, 0.0]
-c = [0.0, 4.53, -2.86]
+a = [8.270, 0.0, 0.0]
+b = [0.0, 8.270, 0.0]
+c = [0.0, 0.0, 7.841]
 
-van = Atom('V', '../data/V.xyz', [0,0,0])
-oxy1 = Atom('O','../data/O1.xyz',[0,0,0])
-oxy2 = Atom('O', '../data/O2.xyz',[0,0,0])
+pot = Atom('K', '../data/K.xyz',[0,0,0])
+cop = Atom('Cu', '../data/Cu.xyz', [0,0,0])
+flu = Atom('F','../data/F.xyz',[0,0,0])
 
-system = Crystal([a,b,c],[van,oxy1,oxy2])
+system = Crystal([a,b,c],[pot,cop,flu])
 lattVs = system.lattVs #3x3 array containg the crystal's lattice vectors
 kVs  = system.getKlattice() #3x3 array containing the reciprocal lattice vectors
 

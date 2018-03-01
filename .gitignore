@@ -1,2 +1,6 @@
 src/test_atom.py
 .DS_Store
+src/asphericalVO2.py
+src/*pdf
+src/sphericalKCuF3_cubic.py
+
