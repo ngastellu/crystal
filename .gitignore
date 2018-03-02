@@ -1,8 +1,6 @@
 src/test_atom.py
 .DS_Store
-src/asphericalVO2.py
+src/*VO2*
+src/*KCuF3*
 src/*pdf
-src/sphericalKCuF3_cubic.py
-src/asphericalK*
-src/asphericalV*
 
