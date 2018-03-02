@@ -4,4 +4,4 @@ c   0.0 0.0 7.841
 atom K K.xyz 0 2
 atom F F.xyz 0 0 0 2
 atom Cu Cu.xyz 0 0 0 2 0
-asymm T
+asymm F

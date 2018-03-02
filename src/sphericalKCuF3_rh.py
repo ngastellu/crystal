@@ -7,16 +7,18 @@ from crystal import Crystal
 from scipy.interpolate import interp1d
 from voigt import Voigt
 import matplotlib.pyplot as plt
+import os
 
-a = [8.270, 0.0, 0.0]
-b = [0.0, 8.270, 0.0]
-c = [0.0, 0.0, 7.841]
+os.chdir('../data')
+#a = [8.270, 0.0, 0.0]
+#b = [0.0, 8.270, 0.0]
+#c = [0.0, 0.0, 7.841]
 
-pot = Atom('K', '../data/K.xyz',[0,0,0])
-cop = Atom('Cu', '../data/Cu.xyz', [0,0,0])
-flu = Atom('F','../data/F.xyz',[0,0,0])
+#pot = Atom('K', '../data/K.xyz',[0,0,0])
+#cop = Atom('Cu', '../data/Cu.xyz', [0,0,0])
+#flu = Atom('F','../data/F.xyz',[0,0,0])
 
-system = Crystal([a,b,c],[pot,cop,flu])
+system = Crystal('KCuF3_rh.inp')
 lattVs = system.lattVs #3x3 array containg the crystal's lattice vectors
 kVs  = system.getKlattice() #3x3 array containing the reciprocal lattice vectors
 
