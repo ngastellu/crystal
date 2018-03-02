@@ -3,4 +3,6 @@ src/test_atom.py
 src/asphericalVO2.py
 src/*pdf
 src/sphericalKCuF3_cubic.py
+src/asphericalK*
+src/asphericalV*
 

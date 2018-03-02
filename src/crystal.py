@@ -14,9 +14,40 @@ from atom import Atom
 
 class Crystal:
 
-    def __init__(self,latt_vecs,basis):
+    def __init__(self, buildFile):
+        """Defines a crystal by its basis and its lattice vectors, which are themselves defined in
+        the build file specified as an argument to this generator. This file also specifies whether or not
+        asymmetries in electron density are to be taken into account or not."""
 
-        self.lattVs = np.array(latt_vecs)
+        self.Asymm = False #attributing determining whether or not to take asymmetries into account
+        
+        self.lattVs = np.zeros((3,3),dtype=float)
+        basis = []
+
+        with open(buildFile,'r') as fo:
+            lines = fo.readlines()
+        for line in lines:
+            words = line.split()
+            if words[0] == 'a':
+                self.lattVs[0] = np.array(map(float,words[1:]))
+            elif words[0] == 'b':
+                self.lattVs[1] = np.array(map(float,words[1:]))
+            elif words[0] == 'c':
+                self.lattVs[2] = np.array(map(float,words[1:]))
+            elif words[0] == 'atom':
+                basis.append(Atom(words[1],words[2],map(int,words[3:])))
+            elif words[0] == 'asymm':
+                if words[1] == 'T':
+                    self.Asymm = True
+                elif words[1] == 'F':
+                    self.Asymm = False
+                else:
+                    print "INPUT FILE ERROR: Only valid values for 'asymm' field are: 'T' ; 'F' .\nReturning 0.\n"
+                    return 0
+            else:
+                print "INPUT FILE ERROR: Incorrect syntax\n" + line + "\nRefer to the README for correct input format.\nReturning 0\n"
+                return 0
+
         #self.SpaceGroup = space_group #H-M symbol
         self.Basis = basis #array of Atom objects
     
