@@ -125,7 +125,7 @@ class Atom:
 
 
          else:
-            print("Invalid orbital populartion array length.\nValid lengths are 2 (core,s), 4 (core,s,p0,p1), and 5 (core,s,d1,d2,d3).\nReturning 0.\n")
+            print("Invalid orbital population array length.\nValid lengths are 2 (core,s), 4 (core,s,p0,p1), and 5 (core,s,d1,d2,d3).\nReturning 0.\n")
             self.sFa = 0
         
                 

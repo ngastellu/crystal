@@ -16,7 +16,7 @@ cop = Atom('Cu', '../data/Cu.xyz', [0,0,2,0,0])
 pot = Atom('K','../data/K.xyz',[0,2])
 fluo = Atom('F', '../data/F.xyz',[0,0,0,2])
 
-system = Crystal([a,b,c],[cop,pot,fluo])
+system = Crystal([a,b,c],[pot,fluo,cop])
 lattVs = system.lattVs #3x3 array containg the crystal's lattice vectors
 kVs  = system.getKlattice() #3x3 array containing the reciprocal lattice vectors
 
@@ -42,13 +42,18 @@ for h in [-i for i in range(-6,7)]:
                 SKm[0][counter] = kNorm
                 for atm in system.Basis:
                     ffs = np.zeros(len(atm.orbPop), dtype=float)
+                    print np.shape(ffs)
                     for j in range(len(atm.XYZ)):
                         position = lattVs[0]*atm.XYZ[j][0] + lattVs[1]*atm.XYZ[j][1] + lattVs[2]*atm.XYZ[j][2]
                         if len(atm.orbPop) == 2: #dealing with only core and s AO
                             ffs = np.array([interp1d(k_grid,FF)(kNorm) for FF in atm.SFa])
-                        else: #atom has aspherical AOs
+                        elif len(atm.orbPop) == 4: #atom has core, s, and p(0-1) AOs.
+                            ffs[:3] = np.array([interp1d(k_grid,FF)(kNorm) for FF in atm.SFa[:3]]) #need to do this case by case bc the nb of
+                            ffs[3] = interp2d(k_grid, beta_grid, FF)(kNorm, theta) #symmetrical and asymmetrical AOs is different for each type of atom
+                        else: #atom has core, s, and d(1-3) AOs
+                            print np.shape(atm.SFa[2:])
                             ffs[:2] = np.array([interp1d(k_grid,FF)(kNorm) for FF in atm.SFa[:2]])
-                            ffs[2:len(atm.orbPop)] = np.array([interp2d(k_grid,beta_grid,FF)(kNorm,theta) for FF in atm.SFa[2:len(atm.orbPop)]])
+                            ffs[2:] = np.array([interp2d(k_grid,beta_grid,FF)(kNorm,theta) for FF in atm.SFa[2:]]).reshape(3)
                         ff = np.dot(atm.orbPop,ffs)
                         SFtmp += ff*np.exp(1j*np.dot(position,kVec))
             SKm[1][counter] = np.conj(SFtmp) * SFtmp

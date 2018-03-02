@@ -49,7 +49,7 @@ for h in [-i for i in range(-6,7)]:
             print counter
             counter += 1
 
-peak_widths = np.array([0.12 for j in range(2197)])
+peak_widths = np.array([0.04 for j in range(2197)])
 SKm = np.reshape(SKm,(2,2197))
 print SKm
 vparams = np.array([SKm[1],SKm[0],peak_widths])
@@ -57,6 +57,8 @@ print vparams
 y = Voigt(4.0*pi*s_grid,vparams,0.5)
 
 plt.plot(s_grid,y/np.amax(y))
+plt.xlim(0.1,0.83)
+plt.ylim(0.0,1.1)
 plt.show()
 
 with open('../data/results_VO2m.dat','w') as fo:
