@@ -1,7 +1,7 @@
 a   8.270 0.0 0.0
 b   0.0 8.270 0.0
 c   0.0 0.0 7.841
-atom K K.xyz 0 2
-atom F F.xyz 0 0 0 2
-atom Cu Cu.xyz 0 0 0 2 0
+atom K K_rh.xyz 0 2
+atom F F_rh.xyz 0 0 0 2
+atom Cu Cu_rh.xyz 0 0 0 2 0
 asymm F

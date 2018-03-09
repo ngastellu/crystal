@@ -1,0 +1,7 @@
+a 8.270 0.0 0.0 
+b 0.0 8.270 0.0
+c 0.0 0.0 8.270
+atom K K_cubic.xyz 0 2
+atom F F_cubic.xyz 0 0 0 2
+atom Cu Cu_cubic.xyz 0 0 0 0 2
+asymm F
